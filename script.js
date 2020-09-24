@@ -1,14 +1,11 @@
 
 var timeEl = document.querySelector(".card-title");
-//var mainEl = document.querySelector(".card-timer");
 var secondsLeft = 60;
 var timerStart = document.querySelector("#start-button");
-// // //var container = document.querySelector(".container");
-// // var questions = document.querySelector("#questions");
-var questionNumber = -1;
 var yesButton = document.getElementById("yes-button")
 var noButton = document.getElementById("no-button")
 var maybeSoButton = document.getElementById("maybeSo-button")
+var questionNumber = -1;
 var finalScore = 0
 
 function toggleButtons(show){
@@ -27,7 +24,7 @@ function toggleButtons(show){
 toggleButtons (false)
 var questionsArray = [
     {
-        title: "Where's the beef?",
+        title: "Does Bigfoot Exist?",
         option1: "Yes",
         option2: "No",
         option3: "maybeSo",
@@ -55,7 +52,7 @@ var questionsArray = [
         answerCorrect: "maybeSo",
     },
     {
-        title: "Does Bigfoot Exist?",
+        title: "Do friends make the best enemies?",
         option1: "Yes",
         option2: "No",
         option3: "maybeSo",
@@ -93,43 +90,35 @@ var questionsArray = [
 function startTimer() {
     //setTime();
     var timerInterval = setInterval(function() {
-       
-        
         secondsLeft--;
-      timeEl.textContent = secondsLeft;
-        
-    //   if( XXXXXXX) {
-    //       secondsLeft - 5;
-    //   }
-      if(secondsLeft === 0) {
+        timeEl.textContent = secondsLeft;
+        // if ()
+
+        if(secondsLeft === 0 ) {
         clearInterval(timerInterval);
         questionNumber = questionsArray.length;
         nextQuestion();
       }
   
     }, 1000);
-  
-
-  }
+}
  
-//   function setTime() {
-//       var 
-//   }
-
-//   function sendMessage() {
-//     timeEl.textContent = " ";
-  
-//     var imgEl = document.createElement("img");
-  
-//     imgEl.setAttribute("src", "images/image_1.jpg");
-//     mainEl.appendChild(imgEl);
-  
-// }
 
 function nextQuestion(){
     questionNumber++;
     if (questionNumber >= questionsArray.length){
-        alert("Score is" + finalScore);
+        var init = prompt("what is your initials?")
+        alert(init + ", your score is " + finalScore);
+
+        var highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+        var newScore = {
+            score: finalScore,
+            initials : init
+        }
+        highscores.push(newScore);
+        window.localStorage.setItem("highscores", JSON.stringify(highscores));
+        
+        secondsLeft = 1;
         toggleButtons(false);
         secondsLeft == 1;
         return;
@@ -144,16 +133,20 @@ function startGame (){
     toggleButtons(true);
     nextQuestion();    
 }
+
 function yesScore (){
     if (questionsArray[questionNumber].answerCorrect == questionsArray[questionNumber].option1){
         finalScore += 1;
+       
     }
+    secondsLeft -= 5;
     nextQuestion()
 } 
 function noScore (){
     if (questionsArray[questionNumber].answerCorrect == questionsArray[questionNumber].option2){
         finalScore += 1;
     }
+    secondsLeft -= 5;
     nextQuestion()
 } 
 function maybeSoScore (){
@@ -163,24 +156,13 @@ function maybeSoScore (){
     nextQuestion()
 } 
 
+
+function subtractScore (){
+
+}
+
+
 timerStart.addEventListener("click", startGame);
 yesButton.addEventListener("click", yesScore);
 noButton.addEventListener("click", noScore);
 maybeSoButton.addEventListener("click", maybeSoScore);
-
-// document.getElementById("start-button").addEventListener("click", function(){
-//     var secondsLeft = 60;
-
-//     var downloadTimer = setInterval(function function1(){
-//     document.getElementById("countdown").innerHTML = timeleft + 
-//     "&nbsp"+"seconds remaining";
-
-//     timeleft -= 1;
-//     if(timeleft <= 0){
-//         clearInterval(downloadTimer);
-//         document.getElementById("countdown").innerHTML = "Time is up!"
-//     }
-//     }, 1000);
-
-//     console.log(countdown);
-// });
